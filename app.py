@@ -7,8 +7,8 @@ import sys
         return num1 - num2
     elif operation == "mul":
         return num1 * num2
-	  elif operation == "div":
-	      return num1 / num2
+    elif operation == "div":
+	return num1 / num2
     else:
         return "Invalid operation"
 
