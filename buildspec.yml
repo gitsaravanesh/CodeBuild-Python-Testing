@@ -1,0 +1,17 @@
+version: 0.2
+2	
+3	phases:
+4	  install:
+5	    commands:
+6	      - echo "Installing dependencies"
+7	      - pip install -r requirements.txt
+8	  build:
+9	    commands:
+10	      - echo "Running unit tests"
+11	      - python app.py 1 2 add
+12	  post_build:
+13	    commands:
+14	      - echo "Build completed on `date`"
+15	artifacts:
+16	  files:
+17	    - '**/*'
