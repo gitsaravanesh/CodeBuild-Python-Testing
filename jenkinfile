@@ -1,0 +1,67 @@
+pipeline {
+    agent any 
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Explicitly checkout from the GitHub repository
+                  git credentialsId: 'GitHubCreds', url: 'git@github.com:cloudtechtrainer/B3-DevOps-CodeBuild.git'            }
+        }
+        
+        stage('Test Addition') {
+            steps {
+                script {
+                    def output = sh(script: "python3 app.py 5 10 add", returnStdout: true).trim()
+                    if (output == "Result: 15.0") {
+                        echo "Addition Test Passed"
+                    } else {
+                        echo "Addition Test Failed"
+                        currentBuild.result = 'FAILURE'
+                    }
+                }
+            }
+        }
+        
+        stage('Test Subtraction') {
+            steps {
+                script {
+                    def output = sh(script: "python3 app.py 20 10 sub", returnStdout: true).trim()
+                    if (output == "Result: 10.0") {
+                        echo "Subtraction Test Passed"
+                    } else {
+                        echo "Subtraction Test Failed"
+                        currentBuild.result = 'FAILURE'
+                    }
+                }
+            }
+        }
+
+        stage('Test Multiplication') {
+            steps {
+                script {
+                    def output = sh(script: "python3 app.py 5 2 mul", returnStdout: true).trim()
+                    if (output == "Result: 10.0") {
+                        echo "Multiplication Test Passed"
+                    } else {
+                        echo "Multiplication Test Failed"
+                        currentBuild.result = 'FAILURE'
+                    }
+                }
+            }
+        }
+        
+        stage('Test Division') {
+            steps {
+                script {
+                    def output = sh(script: "python3 app.py 10 5 div", returnStdout: true).trim()
+                    if (output == "Result: 2.0") {
+                        echo "Division Test Passed"
+                    } else {
+                        echo "Division Test Failed"
+                        currentBuild.result = 'FAILURE'
+                    }
+                }
+            }
+        }
+    }
+}
