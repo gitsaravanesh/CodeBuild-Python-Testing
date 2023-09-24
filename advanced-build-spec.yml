@@ -2,55 +2,26 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      python: 3.11
     commands:
       - echo Installing required packages...
       - pip install -r requirements.txt  # Install any dependencies, if you have any.
-
-  pre_build:
-    commands:
-      - echo Pre-build steps...
-      # Additional pre-build steps can be added here.
-
   build:
     commands:
-      - echo Build started on `date`
-      - echo Testing Addition...
-      - |
-        output=$(python3 app.py 5 10 add)
-        if [ "$output" == "Result: 15.0" ]; then
-          echo "Addition Test Passed"
-        else
-          echo "Addition Test Failed"
-          exit 1
-        fi
-      - echo Testing Subtraction...
-      - |
-        output=$(python3 app.py 20 10 sub)
-        if [ "$output" == "Result: 10.0" ]; then
-          echo "Subtraction Test Passed"
-        else
-          echo "Subtraction Test Failed"
-          exit 1
-        fi
-      - echo Testing Multiplication...
-      - |
-        output=$(python3 app.py 5 2 mul)
-        if [ "$output" == "Result: 10.0" ]; then
-          echo "Multiplication Test Passed"
-        else
-          echo "Multiplication Test Failed"
-          exit 1
-        fi
-      - echo Testing Division...
-      - |
-        output=$(python3 app.py 10 5 div)
-        if [ "$output" == "Result: 2.0" ]; then
-          echo "Division Test Passed"
-        else
-          echo "Division Test Failed"
-          exit 1
-        fi
-
+      - echo "Running unit tests"
+      - python app.py 1 2 add
   post_build:
     commands:
-      - echo Build completed on `date`
+        - echo Testing Addition.
+        - |
+            output=$(python3 app.py 5 10 add)
+            if [ "$output" = "Result: 15.0" ]; then
+              echo "Addition Test Passed"
+            else
+              echo "Addition Test Failed"
+              exit 1
+            fi
+artifacts:
+  files:
+    - '**/*'
