@@ -1,5 +1,5 @@
 version: 0.2
-
+    
 phases:
   install:
     runtime-versions:
@@ -10,18 +10,22 @@ phases:
   build:
     commands:
       - echo "Running unit tests"
-      - python app.py 1 2 add
+      - echo "Performing $operation operation on $num1 and $num2 and should be $result "
+      - python app.py $num1 $num2 $operation
   post_build:
     commands:
-        - echo Testing Addition.
-        - |
-            output=$(python3 app.py 5 10 add)
-            if [ "$output" = "Result: 15.0" ]; then
-              echo "Addition Test Passed"
-            else
-              echo "Addition Test Failed"
-              exit 1
-            fi
+      - echo "Testing Addition."
+      - ACTUAL_RESULT=$(python app.py $num1 $num2 $operation)
+      - PROG_RESULT="Result is $result"
+      - echo "Value of ACTUAL_RESULT is $ACTUAL_RESULT"
+      - echo "Value of PROG_RESULT is $PROG_RESULT"
+      - |
+        if [ "$ACTUAL_RESULT" = "Result is $result" ]; then
+            echo \"Validation successful\";
+        else
+            echo \"The calculated result does not match the RESULT environment variable. Exiting.\";
+            exit 1;
+        fi
 artifacts:
   files:
     - '**/*'
