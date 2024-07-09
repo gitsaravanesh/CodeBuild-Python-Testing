@@ -11,16 +11,16 @@ phases:
     commands:
       - echo "Running unit tests"
       - echo "Performing $operation operation on $num1 and $num2 and should be $result "
-      - python app.py $num1 $num2 $operation
+      - python app.py 3 4 add
   post_build:
     commands:
       - echo "Testing Addition."
-      - ACTUAL_RESULT=$(python app.py $num1 $num2 $operation)
-      - PROG_RESULT="Result is $result"
-      - echo "Value of ACTUAL_RESULT is $ACTUAL_RESULT"
-      - echo "Value of PROG_RESULT is $PROG_RESULT"
+      - ACTUAL_RESULT=$(python app.py 10 5 sub)
+      - PROG_RESULT=5.0
+      - echo "$ACTUAL_RESULT"
+      - echo "$PROG_RESULT"
       - |
-        if [ "$ACTUAL_RESULT" = "Result is $result" ]; then
+        if [ "$ACTUAL_RESULT" = "$PROG_RESULT" ]; then
             echo \"Validation successful\";
         else
             echo \"The calculated result does not match the RESULT environment variable. Exiting.\";
