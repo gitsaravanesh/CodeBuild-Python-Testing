@@ -9,6 +9,10 @@ phases:
     commands:
       - echo "running build"
       - python app.py 3 4 add
+  addtest:
+    commands:
+      - echo "testing add"
+      - python app.py 5 5 add
   post_build:
     commands:
       - echo "Build Completed"
